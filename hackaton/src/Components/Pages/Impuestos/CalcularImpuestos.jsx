@@ -16,7 +16,7 @@ function ConsejosAhorro ()  {
       <Barra/>
       <br></br>
 
-      consejos ahorro
+      Calculadora de pago de impuestos 
 
     </div>
   );
