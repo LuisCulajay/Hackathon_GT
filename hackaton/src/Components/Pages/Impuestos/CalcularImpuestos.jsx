@@ -12,7 +12,7 @@ import { Modal, Checkbox } from "@nextui-org/react";
 
 import Barra from "../../Barra/Barra";
 import { calcularISR } from './Funciones/calculos';
-
+import { calcularIVA } from './Funciones/calculoIva';
 
 
 function CalculadoraImpuestos() {
@@ -38,8 +38,6 @@ function CalculadoraImpuestos() {
   const [visible, setVisible] = React.useState(false);
   const handler = () => setVisible(true);
   const closeHandler = () => {
-    setVisible(false);
-    console.log("closed");
     setResultado("")
     setResultado1("")
     setResultado2("")
@@ -47,6 +45,9 @@ function CalculadoraImpuestos() {
     setResultado4("")
     setResultado5("")
     setError("")
+    setVisible(false);
+    console.log("closed");
+
   };
 
   //Metodo para mostrar le texto del segundo Text
@@ -54,7 +55,7 @@ function CalculadoraImpuestos() {
     console.log(e)
     switch (e) {
       case 'IVA':
-        setTituloCalculo("Ingresa el precio del bien o servicio a calcular el IVA.")
+        setTituloCalculo("Ingresa el precio del bien o servicio libre de impuesto a calcular el IVA.")
         break;
       case 'IVA Pequeño contribuyente':
         setTituloCalculo("Ingresa el salario a calcular el IVA Pequeño contribuyente.")
@@ -153,7 +154,7 @@ function CalculadoraImpuestos() {
           let mensaje2 = "Renta Imponible Anual: Q" + respuesta[0].ImponibleANual + "\n"
           let mensaje3 = "Porcentaje de ISR: " + respuesta[0].Porcentaje + "\n"
           let mensaje4 = "Pago ISR Anual: Q" + respuesta[0].PagoIsr
-          if (respuesta[0].Excedente != undefined) {
+          if (respuesta[0].Excedente !== undefined) {
             let mensaje5 = "Excendente: Q" + respuesta[0].Excedente
             setResultado4(mensaje5)
           }
@@ -168,6 +169,31 @@ function CalculadoraImpuestos() {
           let err = "Ocurrio el siguiente error: " + respuesta[0].Msg
           setError(err)
         }
+        break;
+      case "IVA":
+        console.log("entre")
+        console.log(concatenar)
+        if (concatenar === "") {
+          concatenar = "Vacio"
+          const respuestaIVA = calcularIVA(concatenar)
+          console.log(respuestaIVA[0].Msg)
+          let err = "Ocurrio el siguiente error: " + respuestaIVA[0].Msg
+          setError(err)
+        } else {
+          const respuestaIVA = calcularIVA(parseInt(concatenar))
+          let mensaje = "Valor del bien o servicio sin impuesto: Q" + respuestaIVA[0].SinImpuesto + "\n"
+          let mensaje1 = "Porcentaje del impuesto: " + respuestaIVA[0].PorcentajeIva + "\n"
+          let mensaje2 = "Valor del impuesto: Q" + respuestaIVA[0].Impuesto + "\n"
+          let mensaje3 = "Total a pagar: " + respuestaIVA[0].Total + "\n"
+          let mensaje4 = "Recuerda que el IVA lo pagamos todos los ciudadanos al realizar nuestras compras."
+          setResultado(mensaje4)
+          setResultado1(mensaje)
+          setResultado2(mensaje1)
+          setResultado3(mensaje2)
+          setResultado5(mensaje3)
+          concatenar = ""
+        }
+
         break;
     }
     handler()
@@ -220,7 +246,7 @@ function CalculadoraImpuestos() {
                   {resultado3}
                 </Text>
                 {
-                  resultado4 != "" ?
+                  resultado4 !== "" ?
                     <>
                       <Text id="resultado4" size={16}>
                         {resultado4}
