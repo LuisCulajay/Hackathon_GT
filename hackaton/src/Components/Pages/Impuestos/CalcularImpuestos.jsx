@@ -24,6 +24,8 @@ function CalculadoraImpuestos() {
   const [resultado2, setResultado2] = React.useState("");
   const [resultado3, setResultado3] = React.useState("");
   const [resultado4, setResultado4] = React.useState("");
+  const [resultado5, setResultado5] = React.useState("");
+  const [error, setError] = React.useState("");
 
   //States para el dropdown para seleccionar impuesto/pago
   const [selected, setSelected] = React.useState(new Set(["Impuesto/Pago"]));
@@ -38,6 +40,13 @@ function CalculadoraImpuestos() {
   const closeHandler = () => {
     setVisible(false);
     console.log("closed");
+    setResultado("")
+    setResultado1("")
+    setResultado2("")
+    setResultado3("")
+    setResultado4("")
+    setResultado5("")
+    setError("")
   };
 
   //Metodo para mostrar le texto del segundo Text
@@ -136,18 +145,29 @@ function CalculadoraImpuestos() {
     switch (selected.anchorKey) {
       case "ISR":
         const respuesta = calcularISR(parseInt(concatenar))
-        console.log(respuesta[0].DeduccionesLey)
-        let mensaje = "Renta Neta Anual: Q" + respuesta[0].NetaAnual + "\n"
-        let mensaje1 = "Deducciones de Ley: Q" + respuesta[0].DeduccionesLey + "\n"
-        let mensaje2 = "Renta Imponible Anual: Q" + respuesta[0].ImponibleANual + "\n"
-        let mensaje3 = "Porcentaje de ISR: " + respuesta[0].Porcentaje + "\n"
-        let mensaje4 = "Pago ISR Anual: Q" + respuesta[0].PagoIsr
-        setResultado(mensaje)
-        setResultado1(mensaje1)
-        setResultado2(mensaje2)
-        setResultado3(mensaje3)
-        setResultado4(mensaje4)
-        concatenar = ""
+        console.log(respuesta)
+        if (respuesta[0].Error === undefined) {
+          console.log(respuesta[0].DeduccionesLey)
+          let mensaje = "Renta Neta Anual: Q" + respuesta[0].NetaAnual + "\n"
+          let mensaje1 = "Deducciones de Ley: Q" + respuesta[0].DeduccionesLey + "\n"
+          let mensaje2 = "Renta Imponible Anual: Q" + respuesta[0].ImponibleANual + "\n"
+          let mensaje3 = "Porcentaje de ISR: " + respuesta[0].Porcentaje + "\n"
+          let mensaje4 = "Pago ISR Anual: Q" + respuesta[0].PagoIsr
+          if (respuesta[0].Excedente != undefined) {
+            let mensaje5 = "Excendente: Q" + respuesta[0].Excedente
+            setResultado4(mensaje5)
+          }
+          setResultado(mensaje)
+          setResultado1(mensaje1)
+          setResultado2(mensaje2)
+          setResultado3(mensaje3)
+          setResultado5(mensaje4)
+          concatenar = ""
+        } else {
+          console.log(respuesta[0].Msg)
+          let err = "Ocurrio el siguiente error: " + respuesta[0].Msg
+          setError(err)
+        }
         break;
     }
     handler()
@@ -179,21 +199,45 @@ function CalculadoraImpuestos() {
           </Text>
         </Modal.Header>
         <Modal.Body>
-          <Text id="resultado" size={16}>
-            {resultado}
-          </Text>
-          <Text id="resultado1" size={16}>
-            {resultado1}
-          </Text>
-          <Text id="resultado2" size={16}>
-            {resultado2}
-          </Text>
-          <Text id="resultado3" size={16}>
-            {resultado3}
-          </Text>
-          <Text id="resultado4" b size={16}>
-            {resultado4}
-          </Text>
+
+          {
+            error !== "" ?
+              <Text id="resultado5" b size={16}>
+                {error}
+              </Text>
+              :
+              <>
+                <Text id="resultado" size={16}>
+                  {resultado}
+                </Text>
+                <Text id="resultado1" size={16}>
+                  {resultado1}
+                </Text>
+                <Text id="resultado2" size={16}>
+                  {resultado2}
+                </Text>
+                <Text id="resultado3" size={16}>
+                  {resultado3}
+                </Text>
+                {
+                  resultado4 != "" ?
+                    <>
+                      <Text id="resultado4" size={16}>
+                        {resultado4}
+                      </Text>
+                      <Text id="resultado5" b size={16}>
+                        {resultado5}
+                      </Text>
+                    </>
+                    :
+                    <Text id="resultado5" b size={16}>
+                      {resultado5}
+                    </Text>
+                }
+              </>
+          }
+
+
         </Modal.Body>
         <Modal.Footer>
           <Button auto flat color="error" onPress={closeHandler}>

@@ -34,12 +34,12 @@ export function calcularISR(cantidad) {
                 DeduccionesLey:deducionesLeyAnual,
                 ImponibleANual:rentaImponibleAnual,
                 Porcentaje:isr7,
-                Excedente:excedente*isr7,
-                PagoIsr:pagoIsrAnual}]
+                Excedente:(excedente*isr7).toFixed(2),
+                PagoIsr:pagoIsrAnual.toFixed(2)}]
         }
         
     }else{
-        return [{Error:"Solo se calcula y paga ISR salarios mayores a 4000"}]
+        return [{Error:"Si",Msg:"Solo se calcula y paga ISR salarios mayores a 4000"}]
     }
 
 }
