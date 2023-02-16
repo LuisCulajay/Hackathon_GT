@@ -132,22 +132,24 @@ function CalculadoraImpuestos() {
   };
 
   const pagarImpuesto = () => {
-    console.log("stoy aqui")
-    console.log(concatenar)
-    console.log(parseInt(concatenar))
-    const respuesta = calcularISR(parseInt(concatenar))
-    console.log(respuesta[0].DeduccionesLey)
-    let mensaje = "Renta Neta Anual: Q" + respuesta[0].NetaAnual + "\n"
-    let mensaje1 = "Deducciones de Ley: Q" + respuesta[0].DeduccionesLey + "\n"
-    let mensaje2 = "Renta Imponible Anual: Q" + respuesta[0].ImponibleANual + "\n"
-    let mensaje3 = "Porcentaje de ISR: " + respuesta[0].Porcentaje + "\n"
-    let mensaje4 = "Pago ISR Anual: Q" + respuesta[0].PagoIsr
-    setResultado(mensaje)
-    setResultado1(mensaje1)
-    setResultado2(mensaje2)
-    setResultado3(mensaje3)
-    setResultado4(mensaje4)
-    concatenar = ""
+    console.log(selected.anchorKey)
+    switch (selected.anchorKey) {
+      case "ISR":
+        const respuesta = calcularISR(parseInt(concatenar))
+        console.log(respuesta[0].DeduccionesLey)
+        let mensaje = "Renta Neta Anual: Q" + respuesta[0].NetaAnual + "\n"
+        let mensaje1 = "Deducciones de Ley: Q" + respuesta[0].DeduccionesLey + "\n"
+        let mensaje2 = "Renta Imponible Anual: Q" + respuesta[0].ImponibleANual + "\n"
+        let mensaje3 = "Porcentaje de ISR: " + respuesta[0].Porcentaje + "\n"
+        let mensaje4 = "Pago ISR Anual: Q" + respuesta[0].PagoIsr
+        setResultado(mensaje)
+        setResultado1(mensaje1)
+        setResultado2(mensaje2)
+        setResultado3(mensaje3)
+        setResultado4(mensaje4)
+        concatenar = ""
+        break;
+    }
     handler()
   }
 
