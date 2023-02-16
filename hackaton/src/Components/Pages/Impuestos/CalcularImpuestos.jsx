@@ -202,7 +202,7 @@ function CalculadoraImpuestos() {
 
           {
             error !== "" ?
-              <Text id="resultado5" b size={16}>
+              <Text id="error" b size={16}>
                 {error}
               </Text>
               :
