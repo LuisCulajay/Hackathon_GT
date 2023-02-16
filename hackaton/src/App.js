@@ -6,7 +6,7 @@ import Inicio from './Components/Pages/Inicio/Inicio'
 //-------> PESTAÑA DE IMPUESTOS
 import PagarImpuestos from './Components/Pages/Impuestos/PagarImpuestos'
 import QueImpuestosPagar from './Components/Pages/Impuestos/QueImpuestosPagar'
-import CalcularImpuestos from './Components/Pages/Impuestos/CalcularImpuestos'
+import CalculadoraImpuestos from './Components/Pages/Impuestos/CalcularImpuestos'
 
 
 //-------> PESTAÑA DE ESTADISTICAS
@@ -30,7 +30,7 @@ function App() {
 
           <Route path="/uno" element={<PagarImpuestos />} exact />   
           <Route path="/dos" element={<QueImpuestosPagar />} exact />   
-          <Route path="/tres" element={<CalcularImpuestos />} exact /> 
+          <Route path="/tres" element={<CalculadoraImpuestos />} exact /> 
 
 
           <Route path="/cuatro" element={<ConsejosAhorro />} exact />   
