@@ -11,7 +11,7 @@ import { Modal, Checkbox } from "@nextui-org/react";
 
 
 import Barra from "../../Barra/Barra";
-import { calcularISR } from './Funciones/calculos';
+import { calcularISR } from './Funciones/calculoIsr';
 import { calcularIVA } from './Funciones/calculoIva';
 
 
@@ -145,30 +145,39 @@ function CalculadoraImpuestos() {
     console.log(selected.anchorKey)
     switch (selected.anchorKey) {
       case "ISR":
-        const respuesta = calcularISR(parseInt(concatenar))
-        console.log(respuesta)
-        if (respuesta[0].Error === undefined) {
-          console.log(respuesta[0].DeduccionesLey)
-          let mensaje = "Renta Neta Anual: Q" + respuesta[0].NetaAnual + "\n"
-          let mensaje1 = "Deducciones de Ley: Q" + respuesta[0].DeduccionesLey + "\n"
-          let mensaje2 = "Renta Imponible Anual: Q" + respuesta[0].ImponibleANual + "\n"
-          let mensaje3 = "Porcentaje de ISR: " + respuesta[0].Porcentaje + "\n"
-          let mensaje4 = "Pago ISR Anual: Q" + respuesta[0].PagoIsr
-          if (respuesta[0].Excedente !== undefined) {
-            let mensaje5 = "Excendente: Q" + respuesta[0].Excedente
-            setResultado4(mensaje5)
-          }
-          setResultado(mensaje)
-          setResultado1(mensaje1)
-          setResultado2(mensaje2)
-          setResultado3(mensaje3)
-          setResultado5(mensaje4)
-          concatenar = ""
-        } else {
+        if (concatenar === "") {
+          concatenar = "Vacio"
+          const respuesta = calcularISR(concatenar)
           console.log(respuesta[0].Msg)
           let err = "Ocurrio el siguiente error: " + respuesta[0].Msg
           setError(err)
+        } else {
+          const respuesta = calcularISR(parseInt(concatenar))
+          console.log(respuesta)
+          if (respuesta[0].Error === undefined) {
+            console.log(respuesta[0].DeduccionesLey)
+            let mensaje = "Renta Neta Anual: Q" + respuesta[0].NetaAnual + "\n"
+            let mensaje1 = "Deducciones de Ley: Q" + respuesta[0].DeduccionesLey + "\n"
+            let mensaje2 = "Renta Imponible Anual: Q" + respuesta[0].ImponibleANual + "\n"
+            let mensaje3 = "Porcentaje de ISR: " + respuesta[0].Porcentaje + "\n"
+            let mensaje4 = "Pago ISR Anual: Q" + respuesta[0].PagoIsr
+            if (respuesta[0].Excedente !== undefined) {
+              let mensaje5 = "Excendente: Q" + respuesta[0].Excedente
+              setResultado4(mensaje5)
+            }
+            setResultado(mensaje)
+            setResultado1(mensaje1)
+            setResultado2(mensaje2)
+            setResultado3(mensaje3)
+            setResultado5(mensaje4)
+            concatenar = ""
+          } else {
+            console.log(respuesta[0].Msg)
+            let err = "Ocurrio el siguiente error: " + respuesta[0].Msg
+            setError(err)
+          }
         }
+
         break;
       case "IVA":
         console.log("entre")
