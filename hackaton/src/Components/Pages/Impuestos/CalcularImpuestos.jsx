@@ -15,6 +15,7 @@ import { calcularISR } from './Funciones/calculoIsr';
 import { calcularIVA } from './Funciones/calculoIva';
 import { calcularIUSI } from './Funciones/calculoIusi';
 import { calcularIggs } from './Funciones/calculoIggs';
+import { calcularIrtra } from './Funciones/calculoIrtra';
 
 function CalculadoraImpuestos() {
   const tituloPrincipal = "Calculadora de Impuestos a Pagar"
@@ -253,7 +254,7 @@ function CalculadoraImpuestos() {
           const respuestaIGGS = calcularIggs(parseInt(concatenar))
           console.log(respuestaIGGS)
           if (respuestaIGGS[0].Error === undefined) {
-            let mensaje = "El porcentaje que se aplica es: "+ respuestaIGGS[0].Porcentaje+ "\n"
+            let mensaje = "El porcentaje que se aplica es: " + respuestaIGGS[0].Porcentaje + "\n"
             let mensaje1 = "Salario Mensual: Q" + respuestaIGGS[0].CantidadMensual + "\n"
             let mensaje2 = "El pago de IGGS por mes es: Q" + respuestaIGGS[0].Mensual + "\n"
             let mensaje3 = "Salario Anual: Q: " + respuestaIGGS[0].CantidadAnual + "\n"
@@ -268,6 +269,36 @@ function CalculadoraImpuestos() {
           } else {
             console.log(respuestaIGGS[0].Msg)
             let err = "Ocurrio el siguiente error: " + respuestaIGGS[0].Msg
+            setError(err)
+          }
+        }
+        break;
+      case "IRTRA":
+        if (concatenar === "") {
+          concatenar = "Vacio"
+          const respuestaIRTRA = calcularIrtra(concatenar)
+          console.log(respuestaIRTRA[0].Msg)
+          let err = "Ocurrio el siguiente error: " + respuestaIRTRA[0].Msg
+          setError(err)
+        } else {
+          const respuestaIRTRA = calcularIrtra(parseInt(concatenar))
+          console.log(respuestaIRTRA)
+          if (respuestaIRTRA[0].Error === undefined) {
+            let mensaje = "El porcentaje que se aplica es: " + respuestaIRTRA[0].Porcentaje + "\n"
+            let mensaje1 = "Salario Mensual: Q" + respuestaIRTRA[0].CantidadMensual + "\n"
+            let mensaje2 = "El pago de IGGS por mes es: Q" + respuestaIRTRA[0].Mensual + "\n"
+            let mensaje3 = "Salario Anual: Q: " + respuestaIRTRA[0].CantidadAnual + "\n"
+            let mensaje4 = "El pago de IGGS por año es: Q" + respuestaIRTRA[0].Anual
+
+            setResultado(mensaje)
+            setResultado1(mensaje1)
+            setResultado2(mensaje2)
+            setResultado3(mensaje3)
+            setResultado5(mensaje4)
+            concatenar = ""
+          } else {
+            console.log(respuestaIRTRA[0].Msg)
+            let err = "Ocurrio el siguiente error: " + respuestaIRTRA[0].Msg
             setError(err)
           }
         }
