@@ -18,7 +18,7 @@ export function calcularISR(cantidad) {
     } else {
         if (cantidad > 4000) {
             salarioAnual = cantidad * 12
-            rentaNetaAnual = salarioAnual + bonificacionIncentivoAnual
+            rentaNetaAnual = salarioAnual
             deducionesLeyAnual = gastosPersonales + (salarioAnual * iggs)
             rentaImponibleAnual = rentaNetaAnual - deducionesLeyAnual
             if (rentaImponibleAnual < 300000) {
