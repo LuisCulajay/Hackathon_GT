@@ -14,6 +14,7 @@ import Barra from "../../Barra/Barra";
 import { calcularISR } from './Funciones/calculoIsr';
 import { calcularIVA } from './Funciones/calculoIva';
 import { calcularIUSI } from './Funciones/calculoIusi';
+import { calcularIggs } from './Funciones/calculoIggs';
 
 function CalculadoraImpuestos() {
   const tituloPrincipal = "Calculadora de Impuestos a Pagar"
@@ -141,6 +142,7 @@ function CalculadoraImpuestos() {
     );
   };
 
+  //Metodo con la funcionalidad del boton y calcular los impuestos y pagos
   const pagarImpuesto = () => {
     console.log(selected.anchorKey)
     switch (selected.anchorKey) {
@@ -180,65 +182,95 @@ function CalculadoraImpuestos() {
 
         break;
       case "IVA":
-          console.log("entre")
-          console.log(concatenar)
-          if (concatenar === "") {
-            concatenar = "Vacio"
-            const respuestaIVA = calcularIVA(concatenar)
-            console.log(respuestaIVA[0].Msg)
-            let err = "Ocurrio el siguiente error: " + respuestaIVA[0].Msg
-            setError(err)
-          } else {
-            const respuestaIVA = calcularIVA(parseInt(concatenar))
-            let mensaje = "Valor del bien o servicio sin impuesto: Q" + respuestaIVA[0].SinImpuesto + "\n"
-            let mensaje1 = "Porcentaje del impuesto: " + respuestaIVA[0].PorcentajeIva + "\n"
-            let mensaje2 = "Valor del impuesto: Q" + respuestaIVA[0].Impuesto + "\n"
-            let mensaje3 = "Total a pagar: " + respuestaIVA[0].Total + "\n"
-            let mensaje4 = "Recuerda que el IVA lo pagamos todos los ciudadanos al realizar nuestras compras."
-            setResultado(mensaje4)
-            setResultado1(mensaje)
-            setResultado2(mensaje1)
-            setResultado3(mensaje2)
-            setResultado5(mensaje3)
-            concatenar = ""
-          }
+        console.log("entre")
+        console.log(concatenar)
+        if (concatenar === "") {
+          concatenar = "Vacio"
+          const respuestaIVA = calcularIVA(concatenar)
+          console.log(respuestaIVA[0].Msg)
+          let err = "Ocurrio el siguiente error: " + respuestaIVA[0].Msg
+          setError(err)
+        } else {
+          const respuestaIVA = calcularIVA(parseInt(concatenar))
+          let mensaje = "Valor del bien o servicio sin impuesto: Q" + respuestaIVA[0].SinImpuesto + "\n"
+          let mensaje1 = "Porcentaje del impuesto: " + respuestaIVA[0].PorcentajeIva + "\n"
+          let mensaje2 = "Valor del impuesto: Q" + respuestaIVA[0].Impuesto + "\n"
+          let mensaje3 = "Total a pagar: " + respuestaIVA[0].Total + "\n"
+          let mensaje4 = "Recuerda que el IVA lo pagamos todos los ciudadanos al realizar nuestras compras."
+          setResultado(mensaje4)
+          setResultado1(mensaje)
+          setResultado2(mensaje1)
+          setResultado3(mensaje2)
+          setResultado5(mensaje3)
+          concatenar = ""
+        }
         break;
       case "IUSI":
-          if (concatenar === "") {
-            concatenar = "Vacio"
-            const respuestaIUSI = calcularIUSI(concatenar)
-            console.log(respuestaIUSI[0].Msg)
-            let err = "Ocurrio el siguiente error: " + respuestaIUSI[0].Msg
-            setError(err)
+        if (concatenar === "") {
+          concatenar = "Vacio"
+          const respuestaIUSI = calcularIUSI(concatenar)
+          console.log(respuestaIUSI[0].Msg)
+          let err = "Ocurrio el siguiente error: " + respuestaIUSI[0].Msg
+          setError(err)
+        } else {
+          const respuestaIUSI = calcularIUSI(parseInt(concatenar))
+          console.log(respuestaIUSI)
+          if (respuestaIUSI[0].Error === undefined) {
+            let mensaje = "¡Importante! No pagar el impuesto genera una mora del 20%" + "\n"
+            let mensaje1 = "Condición aplicada: " + respuestaIUSI[0].Condición + "\n"
+            let mensaje2 = "Tasa por millar: " + respuestaIUSI[0].TasaIusi + "\n"
+            let mensaje3 = "La valoración de la vivienda Q: " + respuestaIUSI[0].Valoracion + "\n"
+            let mensaje4 = "Pago de IUSI: Q" + respuestaIUSI[0].Total
+
+            setResultado(mensaje)
+            setResultado1(mensaje1)
+            setResultado2(mensaje2)
+            setResultado3(mensaje3)
+            setResultado5(mensaje4)
+            concatenar = ""
           } else {
-            const respuestaIUSI = calcularIUSI(parseInt(concatenar))
-            console.log(respuestaIUSI)
-            if (respuestaIUSI[0].Error === undefined) {
-              let mensaje = "¡Importante! No pagar el impuesto genera una mora del 20%"  + "\n"
-              let mensaje1 = "Condición aplicada: " + respuestaIUSI[0].Condición + "\n"
-              let mensaje2 = "Tasa por millar: " + respuestaIUSI[0].TasaIusi + "\n"
-              let mensaje3 = "La valoración de la vivienda Q: " + respuestaIUSI[0].Valoracion + "\n"
-              let mensaje4 = "Pago de IUSI: Q" + respuestaIUSI[0].Total
-              
-              setResultado(mensaje)
-              setResultado1(mensaje1)
-              setResultado2(mensaje2)
-              setResultado3(mensaje3)
-              setResultado5(mensaje4)
-              concatenar = ""
+            if (respuestaIUSI[0].Error === "Ntt") {
+              console.log(respuestaIUSI[0].Msg)
+              let err = respuestaIUSI[0].Msg
+              setError(err)
             } else {
-              if(respuestaIUSI[0].Error==="Ntt"){
-                console.log(respuestaIUSI[0].Msg)
-                let err = respuestaIUSI[0].Msg
-                setError(err)
-              }else{
-                console.log(respuestaIUSI[0].Msg)
-                let err = "Ocurrio el siguiente error: " + respuestaIUSI[0].Msg
-                setError(err)
-              }
-              
+              console.log(respuestaIUSI[0].Msg)
+              let err = "Ocurrio el siguiente error: " + respuestaIUSI[0].Msg
+              setError(err)
             }
+
           }
+        }
+        break;
+      case "IGGS":
+        if (concatenar === "") {
+          concatenar = "Vacio"
+          const respuestaIGGS = calcularIggs(concatenar)
+          console.log(respuestaIGGS[0].Msg)
+          let err = "Ocurrio el siguiente error: " + respuestaIGGS[0].Msg
+          setError(err)
+        } else {
+          const respuestaIGGS = calcularIggs(parseInt(concatenar))
+          console.log(respuestaIGGS)
+          if (respuestaIGGS[0].Error === undefined) {
+            let mensaje = "El porcentaje que se aplica es: "+ respuestaIGGS[0].Porcentaje+ "\n"
+            let mensaje1 = "Salario Mensual: Q" + respuestaIGGS[0].CantidadMensual + "\n"
+            let mensaje2 = "El pago de IGGS por mes es: Q" + respuestaIGGS[0].Mensual + "\n"
+            let mensaje3 = "Salario Anual: Q: " + respuestaIGGS[0].CantidadAnual + "\n"
+            let mensaje4 = "El pago de IGGS por año es: Q" + respuestaIGGS[0].Anual
+
+            setResultado(mensaje)
+            setResultado1(mensaje1)
+            setResultado2(mensaje2)
+            setResultado3(mensaje3)
+            setResultado5(mensaje4)
+            concatenar = ""
+          } else {
+            console.log(respuestaIGGS[0].Msg)
+            let err = "Ocurrio el siguiente error: " + respuestaIGGS[0].Msg
+            setError(err)
+          }
+        }
         break;
     }
     handler()
