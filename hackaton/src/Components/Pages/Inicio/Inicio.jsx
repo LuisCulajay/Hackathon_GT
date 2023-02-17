@@ -48,13 +48,13 @@ function Inicio ()  {
 
           <Collapse.Group accordion={false}>
             <br></br><br></br><br></br><br></br>
-            <Collapse title="Misión">
-              <Text>
+            <Collapse  title="Misión">
+              <Text size="$2xl" >
               Somos reconocidos por nuestra excelecia en el servicio como el Grupo Financiero No. 1 en crecimiento y rentabilidad, a través del desarrollo de colaboradores, comprometidos en generar el máximo bienestar de sus clientes.
               </Text>
             </Collapse>
             <Collapse title="Visión">
-              <Text>
+              <Text size="$2xl">
                 Nuestra pasión por el servicio, RESUELVE YA!
               </Text>
             </Collapse>

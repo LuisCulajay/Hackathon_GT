@@ -11,7 +11,7 @@ export default function Footer() {
           <img alt="logo" src={logo} />
         </div>
         <div>
-          <ul class="social-icon">
+          {/* <ul class="social-icon">
             <li class="social-icon__item">
               <a
                 class="social-icon__link"
@@ -41,7 +41,7 @@ export default function Footer() {
                 logo yt
               </a>
             </li>
-          </ul>
+          </ul> */}
           <ul class="menu">
             <li class="menu__item">
               <a class="menu__link" href="/">
