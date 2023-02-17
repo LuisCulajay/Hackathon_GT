@@ -373,7 +373,7 @@ function CalculadoraImpuestos() {
       }
 
       var totalDeducciones = 0
-      totalDeducciones=totalIGSS+totalIRTRA
+      totalDeducciones = totalIGSS + totalIRTRA
       console.log(totalDeducciones)
       // totalDeducciones = totalISR.toFixed(2) 
       // totalDeducciones+=totalIGSS
@@ -385,12 +385,84 @@ function CalculadoraImpuestos() {
       const resultado1 = "El ISR a pagar por mes es: Q" + totalISR.toFixed(2)
       const resultado2 = "El IGSS a pagar por mes es: Q" + totalIGSS
       const resultado3 = "El IRTRA a pagar por mes es: Q" + totalIRTRA
-      
 
-      const traer = calcularPlanilla(parseInt(concatenar),totalISR.toFixed(2),totalIGSS,totalIRTRA)
+
+      const traer = calcularPlanilla(parseInt(concatenar), totalISR.toFixed(2), totalIGSS, totalIRTRA, 250)
       const resultado4 = "El total de Deducciones de Ley a pagar por mes es: Q" + traer[0].Deducciones
       const resultado5 = "La resta de salario base y deducciones de ley es: Q" + traer[0].Resta
       const resultado6 = "El salario que se recibe al mes es: Q" + traer[0].Total
+      setResultado(resultado)
+      setResultado1(resultado1)
+      setResultado2(resultado2)
+      setResultado3(resultado3)
+      setResultado4(resultado4)
+      setResultado5(resultado5)
+      setResultado6(resultado6)
+      concatenar = ""
+    }
+  }
+
+  const planillaAnual = () => {
+    if (concatenar === "") {
+      concatenar = "Vacio"
+      const res = calcularISR(concatenar)
+      console.log(res[0].Msg)
+      let err = "Ocurrio el siguiente error: " + res[0].Msg
+      setError(err)
+    } else {
+      const respuestaPlaniISR = calcularISR(parseInt(concatenar))
+      const respuestaPlaniIGSS = calcularIggs(parseInt(concatenar))
+      const respuestaPlaniIRTRA = calcularIrtra(parseInt(concatenar))
+      let totalISR = 0
+      let totalIGSS = 0
+      let totalIRTRA = 0
+
+      if (respuestaPlaniISR[0].Error === undefined) {
+        console.log(respuestaPlaniISR[0].DeduccionesLey)
+        totalISR = respuestaPlaniISR[0].PagoIsr
+      } else {
+        console.log(respuestaPlaniISR[0].Msg)
+        let err = "Ocurrio el siguiente error: " + respuestaPlaniISR[0].Msg
+        setError(err)
+      }
+
+      //CALCULO IGSS
+      if (respuestaPlaniIGSS[0].Error === undefined) {
+        totalIGSS = respuestaPlaniIGSS[0].Anual
+      } else {
+        console.log(respuestaPlaniIGSS[0].Msg)
+        let err = "Ocurrio el siguiente error: " + respuestaPlaniIGSS[0].Msg
+        setError(err)
+      }
+
+      //CALCULO IRTRA
+      if (respuestaPlaniIRTRA[0].Error === undefined) {
+        totalIRTRA = respuestaPlaniIRTRA[0].Anual
+      } else {
+        console.log(respuestaPlaniIRTRA[0].Msg)
+        let err = "Ocurrio el siguiente error: " + respuestaPlaniIRTRA[0].Msg
+        setError(err)
+      }
+
+      var totalDeducciones = 0
+      totalDeducciones = totalIGSS + totalIRTRA
+      console.log(totalDeducciones)
+      // totalDeducciones = totalISR.toFixed(2) 
+      // totalDeducciones+=totalIGSS
+      // totalDeducciones+=totalIRTRA
+      const restaDedudcciones = parseInt(concatenar) - totalDeducciones
+      const salarioFinal = restaDedudcciones + 250
+
+      const resultado = "El salario base mensual es: Q" + concatenar
+      const resultado1 = "El ISR a pagar por mes es: Q" + totalISR
+      const resultado2 = "El IGSS a pagar por mes es: Q" + totalIGSS
+      const resultado3 = "El IRTRA a pagar por mes es: Q" + totalIRTRA
+
+
+      const traer = calcularPlanilla(parseInt(concatenar) * 12, totalISR, totalIGSS, totalIRTRA, 3000)
+      const resultado4 = "El total de Deducciones de Ley a pagar por mes es: Q" + traer[0].Deducciones
+      const resultado5 = "La resta de salario base y deducciones de ley es: Q" + traer[0].Resta
+      const resultado6 = "El salario que se recibe al año es: Q" + traer[0].Total
       setResultado(resultado)
       setResultado1(resultado1)
       setResultado2(resultado2)
@@ -406,6 +478,9 @@ function CalculadoraImpuestos() {
     console.log(selected.anchorKey)
     if (selected.anchorKey === "Planilla Mensual") {
       planillaMensual()
+      handler1()
+    }else if (selected.anchorKey==="Planilla Anual"){
+      planillaAnual()
       handler1()
     } else {
       switch (selected.anchorKey) {
