@@ -196,11 +196,13 @@ export default function Barra() {
                         >
                             <Dropdown.Item key="profile" css={{ height: "$18" }}>
                                 <Text b color="inherit" css={{ d: "flex" }}>
-                                    aqui podriamos poner texto, sino se lo quitamos
+                                Toma decisiones financieras más informadas 
                                 </Text>
                             </Dropdown.Item>
                             <Dropdown.Item key="settings" withDivider color="primary">
-                                mas texto jeje
+                                <Link href="https://www.gtc.com.gt">
+                                Ir a mi banca virtual
+                                </Link>
                             </Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>

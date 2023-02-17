@@ -1,44 +1,37 @@
-import './App.css';
+import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import Inicio from './Components/Pages/Inicio/Inicio'
+import Inicio from "./Components/Pages/Inicio/Inicio";
 
 //-------> PESTAÑA DE IMPUESTOS
-import PagarImpuestos from './Components/Pages/Impuestos/PagarImpuestos'
-import QueImpuestosPagar from './Components/Pages/Impuestos/QueImpuestosPagar'
-import CalculadoraImpuestos from './Components/Pages/Impuestos/CalcularImpuestos'
-
+import PagarImpuestos from "./Components/Pages/Impuestos/PagarImpuestos/PagarImpuestos";
+import QueImpuestosPagar from "./Components/Pages/Impuestos/QueImpuestos/QueImpuestosPagar";
+import CalculadoraImpuestos from "./Components/Pages/Impuestos/CalcularImpuestos";
 
 //-------> PESTAÑA DE ESTADISTICAS
-import ConsejosAhorro from './Components/Pages/Estadisticas/ConsejosAhorro'
-import GraficaAhorros from './Components/Pages/Estadisticas/GraficaAhorros'
-import GraficaGastos from './Components/Pages/Estadisticas/GraficaGastos'
-
+import ConsejosAhorro from "./Components/Pages/Estadisticas/ConsejosAhorro";
+import GraficaAhorros from "./Components/Pages/Estadisticas/GraficaAhorros";
+import GraficaGastos from "./Components/Pages/Estadisticas/GraficaGastos";
 
 //-------> PESTAÑA DE PLAN DE RETIRO
-import PlanRetiro from './Components/Pages/PlanRetiro/PlanRetiro'
-
-
+import PlanRetiro from "./Components/Pages/PlanRetiro/PlanRetiro";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Inicio />} exact />  
+          <Route path="/" element={<Inicio />} exact />
 
+          <Route path="/uno" element={<PagarImpuestos />} exact />
+          <Route path="/dos" element={<QueImpuestosPagar />} exact />
+          <Route path="/tres" element={<CalculadoraImpuestos />} exact />
 
-          <Route path="/uno" element={<PagarImpuestos />} exact />   
-          <Route path="/dos" element={<QueImpuestosPagar />} exact />   
-          <Route path="/tres" element={<CalculadoraImpuestos />} exact /> 
+          <Route path="/cuatro" element={<ConsejosAhorro />} exact />
+          <Route path="/cinco" element={<GraficaAhorros />} exact />
+          <Route path="/seis" element={<GraficaGastos />} exact />
 
-
-          <Route path="/cuatro" element={<ConsejosAhorro />} exact />   
-          <Route path="/cinco" element={<GraficaAhorros />} exact />   
-          <Route path="/seis" element={<GraficaGastos />} exact />    
-
-
-          <Route path="/siete" element={<PlanRetiro />} exact />    
+          <Route path="/siete" element={<PlanRetiro />} exact />
         </Routes>
       </BrowserRouter>
     </div>
@@ -46,4 +39,3 @@ function App() {
 }
 
 export default App;
-

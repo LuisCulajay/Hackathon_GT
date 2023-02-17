@@ -1,12 +1,12 @@
 import React from "react";
 
-import Barra from "../../Barra/Barra";
+import Barra from "../../../Barra/Barra";
 import { Grid, Card, Text, Button, Row, Col, Link } from "@nextui-org/react";
 import "./QueImpuestosPagar.css";
-import logo from "../../../assets/yasekomo-7.jpg";
-import Footer from "../../Footer/Footer";
+import logo from "../../../../assets/yasekomo-7.jpg";
+import Footer from "../../../Footer/Footer";
 
-function QueImpuestosPagar() {
+function PagarImpuestos() {
   return (
     <>
       <Barra />
@@ -122,7 +122,7 @@ const Card4 = () => (
       <Row className="btnO">
         <Col>
           <Text color="#000" size={12}>
-            Recuerda que puedes pargar tus impuestos desde tu banca en virtual.
+            Recuerda que puedes pargar tus impuestos desde tu banca virtual.
           </Text>
         </Col>
         <Col>
@@ -146,4 +146,4 @@ const Card4 = () => (
   </Card>
 );
 
-export default QueImpuestosPagar;
+export default PagarImpuestos;
